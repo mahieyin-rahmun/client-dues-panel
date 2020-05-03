@@ -54,7 +54,7 @@ class ClientInfo extends Component {
 	}
 }
 
-
+// store by client-clientID prop so that data lag does not occur
 const matchStateToProps = (state, props) => ({
 	client: state.firestore.ordered[`client-${props.match.params.id}`] &&
 		state.firestore.ordered[`client-${props.match.params.id}`][0]
