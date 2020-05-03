@@ -1,3 +1,5 @@
+This repository contains a very basic client dues management app created with React, Redux with Firebase as the backend.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
