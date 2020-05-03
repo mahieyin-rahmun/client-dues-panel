@@ -8,6 +8,42 @@ import * as AppRoutes from "../routes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class ClientInfo extends Component {
+	constructor() {
+		super();
+		this.state = {
+			showEditDueForm: false,
+			editDueFormData: {
+				due: ""
+			}
+		};
+
+		this.onUpdateSubmit = this.onUpdateSubmit.bind(this);
+		this.deleteClientHandler = this.deleteClientHandler.bind(this);
+	}
+
+	deleteClientHandler(clientId, event) {
+		event.preventDefault();
+		
+		let { firestore } = this.props;
+
+		firestore.delete({ collection: "clients", doc: clientId })
+			.then(() => this.props.history.push(AppRoutes.DASHBOARD));
+	}
+
+	onUpdateSubmit(event)	{
+		event.preventDefault();
+
+		let { firestore, client } = this.props;
+		let { editDueFormData } = this.state;
+
+		const clientDueUpdate = {
+			due: parseFloat(editDueFormData.due)
+		};
+
+		firestore.update({ collection: "clients", doc: client.id }, clientDueUpdate)			
+			.then(() => this.setState({ ...this.state, showEditDueForm: !this.state.showEditDueForm }));
+	}
+
 	render() {
 		if (this.props.client) {
 			return (
@@ -24,6 +60,14 @@ class ClientInfo extends Component {
 					<hr />
 					<div className="card-header text-muted rounded">
 						Client ID: {this.props.client.id}
+						<div className="float-right">
+							<input
+								type="button"
+								value="Delete Client"
+								className="btn btn-sm btn-danger"
+								onClick={this.deleteClientHandler.bind(this, this.props.client.id)}
+							/>
+						</div>
 					</div>
 
 					<div className="card">
@@ -38,9 +82,30 @@ class ClientInfo extends Component {
 						</div>
 					</div>
 					<div className="card-footer text-muted">
-						Due Amount: $<span className={this.props.client.due > 0 ? "text-danger" : "text-success"}>
-							{parseFloat(this.props.client.due).toFixed(2)}
+						Due Amount: $
+									<span className={this.props.client.due > 0 ? "text-danger" : "text-success"}>
+							{parseFloat(this.props.client.due).toFixed(2)} <FontAwesomeIcon icon="pen"
+								onClick={() => this.setState({ ...this.state, showEditDueForm: !this.state.showEditDueForm })}
+								style={{ "cursor": "pointer" }}
+							/>
 						</span>
+							{
+								this.state.showEditDueForm ? (
+									// edit balance form
+									<form className="form-inline" onSubmit={this.onUpdateSubmit}>
+										<input
+											type="text"
+											name="updatedDue"
+											className="form-control"											
+											value={this.state.editDueFormData.due}
+											placeholder="Update Due"
+											onChange={(event) => this.setState({ ...this.state, editDueFormData: { due: event.target.value } })}
+										/>
+										<input type="submit" className="btn btn-sm btn-dark ml-3" value="Update Due" />
+									</form>
+									
+								) : ""									
+							}
 					</div>					
 				</div>
 			);
