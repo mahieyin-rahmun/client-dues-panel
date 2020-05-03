@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# Firebase API Key and Stuff
+FirebaseConfig.js
+
 # testing
 /coverage
 
