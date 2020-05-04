@@ -7,6 +7,11 @@
 
 # Firebase API Key and Stuff
 FirebaseConfig.js
+.firebase
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
 
 # testing
 /coverage
