@@ -6,6 +6,7 @@ import AlertMessages from '../layouts/AlertMessage';
 import { Link } from 'react-router-dom';
 import * as AppRoutes from "../routes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import timeConverter from '../../helpers/TimestampToDate'
 
 class ClientInfo extends Component {
 	constructor() {
@@ -89,6 +90,8 @@ class ClientInfo extends Component {
 								style={{ "cursor": "pointer" }}
 							/>
 						</span>
+						<br />
+						Due date: {timeConverter(this.props.client.dueDate.seconds)}						
 							{
 								this.state.showEditDueForm ? (
 									// edit balance form
