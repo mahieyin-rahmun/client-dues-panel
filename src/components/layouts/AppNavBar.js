@@ -69,8 +69,7 @@ class AppNavBar extends Component {
 									<li className="nav-item">
 										<a href="#!"
 											className="nav-link disabled font-weight-bold"
-											onClick={this.onLogoutClick}
-										>{auth.email}</a>
+										>Welcome, {auth.email}</a>
 									</li>
 									<li className="nav-item">
 										<a href="#!" className="nav-link font-weight-bold" onClick={this.onLogoutClick}>Logout</a>
