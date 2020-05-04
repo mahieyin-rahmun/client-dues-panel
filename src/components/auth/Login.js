@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-// import { compose } from 'redux';
-// import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase'; // for authentication
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AlertMessage from '../layouts/AlertMessage';
+
+import notifyUser from '../../store/actions/action-creators/NotifyUser';
 
 class Login extends Component {
 	constructor() {
@@ -26,8 +29,18 @@ class Login extends Component {
 			email,
 			password
 		})
-			.then((res) => console.log(res.user.user.uid))
-			.catch((err) => alert(err.message));
+			.then((res) => {
+				this.props.notifyUser({
+					messageType: "success",
+					body: ""
+				});
+			})
+			.catch((err) => {
+				this.props.notifyUser({
+					messageType: "error",
+					body: err.message
+				});
+			});
 	}
 
 	onChange(event) {
@@ -48,6 +61,11 @@ class Login extends Component {
 									Login
 								</span>
 							</h1>
+							{
+								this.props.notify.message && this.props.notify.message.messageType === "error" ? (
+									<AlertMessage className="alert alert-danger" message={this.props.notify.message.body} />
+								) : null
+							}
 							<form onSubmit={this.onLoginCredentialsSubmitted}>
 								<div className="form-group">
 									<label htmlFor="email">Email</label>
@@ -67,4 +85,11 @@ class Login extends Component {
 	}
 }
 
-export default firebaseConnect()(Login);
+const matchStateToProps = (state, props) => ({
+	notify: state.notify
+});
+
+export default compose(
+	firebaseConnect(),
+	connect(matchStateToProps, { notifyUser })
+)(Login);

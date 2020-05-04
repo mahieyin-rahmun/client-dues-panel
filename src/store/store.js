@@ -9,7 +9,7 @@ import { createFirestoreInstance, firestoreReducer } from 'redux-firestore';
 import firebaseConfig from "./FirebaseConfig";
 
 // Other Reducers
-// @TODO
+import notifyReducer from './reducers/NotifyReducer';
 
 const rrfConfig = {
     userProfile: 'users',
@@ -22,7 +22,8 @@ firebase.initializeApp(firebaseConfig);
 // Add firebase to reducers, other reducers will also go here
 const rootReducer = combineReducers({
     firebase: firebaseReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer,
+    notify: notifyReducer
 });
 
 // thunk middleware
@@ -51,4 +52,3 @@ export {
     store,
     rrfProps
 };
-
