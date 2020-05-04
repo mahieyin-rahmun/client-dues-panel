@@ -6,6 +6,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
+import logoutCleanup from '../../store/actions/action-creators/LogoutAction';
+
 class AppNavBar extends Component {
 	constructor() {
 		super();
@@ -31,6 +33,7 @@ class AppNavBar extends Component {
 
 		const { firebase } = this.props;
 		firebase.logout();
+		this.props.logoutCleanup();
 	}
 
 	render() {
@@ -103,5 +106,5 @@ const matchStateToProp = (state, prop) => ({
 
 export default compose(
 	firebaseConnect(),
-	connect(matchStateToProp)
+	connect(matchStateToProp, { logoutCleanup })
 )(AppNavBar);
