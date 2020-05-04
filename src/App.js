@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'; // the core library
-import { fab } from '@fortawesome/free-brands-svg-icons';    // the icon library
-import { faHamburger, faPlus, faUsers, faArrowCircleRight, faArrowCircleLeft, faSpinner, faPen, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { fab, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';    // the icon library
+import {
+  faHamburger, faPlus, faUsers, faArrowCircleRight,
+  faArrowCircleLeft, faSpinner, faPen, faLock, faSignInAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 import * as AppRoutes from "./components/routes";
 import AppNavBar from "./components/layouts/AppNavBar";
@@ -13,7 +16,9 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/AuthHelper';
 
-library.add(fab, faHamburger, faPlus, faUsers, faArrowCircleRight, faArrowCircleLeft, faSpinner, faPen, faLock, faSignInAlt);
+library.add(fab, faHamburger, faPlus, faUsers,
+  faArrowCircleRight, faArrowCircleLeft, faSpinner,
+  faPen, faLock, faSignInAlt, faGoogle, faGithub);
 
 class App extends Component {
   render() {

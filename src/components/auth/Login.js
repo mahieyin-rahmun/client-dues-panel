@@ -7,6 +7,8 @@ import AlertMessage from '../layouts/AlertMessage';
 
 import notifyUser from '../../store/actions/action-creators/NotifyUser';
 
+import OAuthProvider from '../auth/OAuthProvider';
+
 class Login extends Component {
 	constructor() {
 		super();
@@ -77,6 +79,7 @@ class Login extends Component {
 								</div>
 								<input type="submit" value="Login" className="btn btn-primary btn-large btn-block"/>
 							</form>
+							<OAuthProvider />
 						</div>
 					</div>
 				</div>

@@ -7,6 +7,8 @@ import AlertMessage from '../layouts/AlertMessage';
 
 import notifyUser from '../../store/actions/action-creators/NotifyUser';
 
+import OAuthProvider from '../auth/OAuthProvider'
+
 
 class Register extends Component {
 	constructor() {
@@ -77,12 +79,11 @@ class Register extends Component {
 					messageType: "error",
 					body: err.message
 				});
-				
+
 				this.toggleSubmitButtonClickedStatus();
 			});
 		}
 	}
-
 
 	render() {
 		return (
@@ -118,8 +119,10 @@ class Register extends Component {
 									type="submit"
 									value="Register"
 									className={this.state.ui.submitButtonHasBeenClicked ? "btn btn-primary btn-large btn-block disabled" : "btn btn-primary btn-large btn-block"}
-									onClick={this.onSubmitButtonClick} />
+									onClick={this.onSubmitButtonClick}
+								/>
 							</form>
+							<OAuthProvider />
 						</div>
 					</div>
 				</div>
