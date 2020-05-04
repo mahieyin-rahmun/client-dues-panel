@@ -6,7 +6,9 @@ import AlertMessage from '../layouts/AlertMessage';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+
+import timeConverter from '../../helpers/TimestampToDate'
 
 class Clients extends Component {
 	constructor() {
@@ -35,9 +37,9 @@ class Clients extends Component {
 	}
 
 	render() {
-		let clients = this.props.clients;
+		if (isLoaded(this.props.clients)) {
+			const { clients } = this.props;
 
-		if (clients) {
 			return (
 				<div>
 					<div className="row">
@@ -53,7 +55,7 @@ class Clients extends Component {
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th>Email</th>
+								<th>Due Date</th>
 								<th>Dues</th>
 								<th></th>
 							</tr>
@@ -63,7 +65,7 @@ class Clients extends Component {
 									clients.map(client => (
 										<tr key={client.id}>
 											<td>{client.firstName}{' '}{client.lastName}</td>
-											<td>{client.email}</td>
+											<td>{timeConverter(client.dueDate.seconds)}</td>
 											<td className="font-weight-bold">
 												{
 													parseFloat(client.due).toFixed(2) > 0 ?
@@ -94,11 +96,26 @@ class Clients extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-	clients: state.firestore.ordered.clients
+	clients: state.firestore.ordered.clients,
+	uid: state.firebase.auth.uid
 })
 
 // need to wrap the component with both firestoreConnect and regular connect with mapStateToProps
 export default compose(
-	firestoreConnect([{ collection: 'clients' }]),
-	connect(mapStateToProps, {})
+	connect(mapStateToProps, {}),
+	firestoreConnect((props) => {
+		// only get due details for the person who added the data
+		return [
+			{	collection: "clients" },
+			{
+				collection: "clients",
+				orderBy: [
+					['dueDate', 'asc']
+				],
+				where: [
+					['userId', '==', props.uid]
+				]
+			}
+		]
+	})	
 )(Clients);
