@@ -1,3 +1,5 @@
+// https://github.com/prescottprue/react-redux-firebase
+
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -23,6 +25,7 @@ firebase.initializeApp(firebaseConfig);
 const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
+    // notify reducer
     notify: notifyReducer
 });
 
@@ -48,6 +51,7 @@ const rrfProps = {
     createFirestoreInstance
 };
 
+// needed in index.js
 export {
     store,
     rrfProps

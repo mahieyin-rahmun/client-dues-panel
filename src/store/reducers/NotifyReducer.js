@@ -1,3 +1,4 @@
+// reducer for notifying user of error messages
 import { NOTIFY_USER } from '../actions/types/NotifyUserTypes'
 
 const initialState = {

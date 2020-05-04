@@ -1,7 +1,9 @@
+// https://github.com/prescottprue/react-redux-firebase/blob/master/docs/recipes/routing.md
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import Loading from '../components/layouts/Loading';
 import * as AppRoutes from "../components/routes";
+
 const locationHelper = locationHelperBuilder({});
 
 export const UserIsAuthenticated = connectedRouterRedirect({

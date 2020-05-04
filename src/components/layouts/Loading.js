@@ -1,3 +1,4 @@
+// component for AuthHelper boilerplate (AuthHelper.js)
 import React from 'react'
 
 export default function Loading() {

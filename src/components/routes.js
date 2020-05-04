@@ -1,3 +1,4 @@
+// route constants
 export const HOME = "/";
 export const DASHBOARD = "/dashboard";
 export const ADD_CLIENT = "/client/add";

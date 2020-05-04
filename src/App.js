@@ -16,6 +16,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './helpers/AuthHelper';
 
+// registering icons
 library.add(fab, faHamburger, faPlus, faUsers,
   faArrowCircleRight, faArrowCircleLeft, faSpinner,
   faPen, faLock, faSignInAlt, faGoogle, faGithub);
