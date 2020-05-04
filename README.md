@@ -1,5 +1,17 @@
 This repository contains a very basic client dues management app created with React, Redux with Firebase as the backend.
 
+## App deployed at: https://react-client-panel-cdf53.web.app/
+
+## For development: <br/>
+1. Head over to https://console.firebase.google.com/ to create a new project and get the configuration file for Web App. The configurations should be saved in `src/store/FirebaseConfig.js` file.
+
+2. Clone the repo.
+
+3. run `npm i` to install the dependencies
+
+4. `npm start` should get the project up and running.<br /> <br />
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
