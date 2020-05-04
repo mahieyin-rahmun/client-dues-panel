@@ -82,6 +82,9 @@ class AppNavBar extends Component {
 									<li className="nav-item">
 										<Link to={AppRoutes.LOGIN} className="nav-link">Login</Link>
 									</li>
+									<li className="nav-item">
+										<Link to={AppRoutes.REGISTER} className="nav-link">Register</Link>
+									</li>
 								</ul>
 							) : null
 						}
