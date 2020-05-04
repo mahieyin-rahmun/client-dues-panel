@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, firebaseConnect } from 'react-redux-firebase';
+
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'
 
 import * as AppRoutes from "../routes";
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 
 class AddClientForm extends Component {
@@ -14,11 +19,20 @@ class AddClientForm extends Component {
 			lastName: "",
 			email: "",
 			phone: "",
-			due: 0
+			due: 0,
+			dueDate: new Date()
 		}
 
 		this.onChangeHandler = this.onChangeHandler.bind(this);
 		this.onFormSubmitHandler = this.onFormSubmitHandler.bind(this);
+		this.onCalendarDatePicked = this.onCalendarDatePicked.bind(this);
+	}
+
+	onCalendarDatePicked(date) {
+		this.setState({
+			...this.state,
+			dueDate: date
+		});
 	}
 
 	onChangeHandler(event) {
@@ -29,17 +43,19 @@ class AddClientForm extends Component {
 
 	onFormSubmitHandler(event) {
 		event.preventDefault();
-		
+
 		let newClient = this.state;
 
-		let { firestore, history } = this.props;
+		let { firestore, history, uid } = this.props;
+
+		newClient.userId = uid;
 
 		if (newClient.due === '') {
 			newClient.due = 0;
 		}
 
 		firestore.add({ collection: 'clients' }, newClient)
-			.then(() => history.push(AppRoutes.DASHBOARD));		
+			.then(() => history.push(AppRoutes.DASHBOARD));
 	}
 
 	render() {
@@ -50,11 +66,11 @@ class AddClientForm extends Component {
 						<Link to={AppRoutes.DASHBOARD}>
 							<FontAwesomeIcon icon="arrow-circle-left" ></FontAwesomeIcon>
 							{' '} Back to Dashboard
-                    </Link>
+            </Link>
 					</div>
 				</div>
 
-				<hr/>
+				<hr />
 
 				<div className="card">
 					<div className="card-header">New Client Form</div>
@@ -111,6 +127,10 @@ class AddClientForm extends Component {
 									onChange={this.onChangeHandler}
 								/>
 							</div>
+							<div className="form-group">
+								<label htmlFor="dueDate">Due Date</label>
+								<Calendar className="Calendar mt-3 mb-3" onChange={this.onCalendarDatePicked} />
+							</div>
 							<input type="submit" className="btn btn-secondary btn-large btn-block" value="Create New Client" />
 						</form>
 					</div>
@@ -120,5 +140,12 @@ class AddClientForm extends Component {
 	}
 }
 
+const matchStateToProps = (state, props) => ({
+	uid: state.firebase.auth.uid
+})
 
-export default firestoreConnect()(AddClientForm);
+export default compose(
+	firestoreConnect(),
+	firebaseConnect(),
+	connect(matchStateToProps)
+)(AddClientForm);
